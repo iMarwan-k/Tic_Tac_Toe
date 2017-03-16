@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     //2 means no player
     int [] status = {2,2,2,2,2,2,2,2,2};
 
+    //all possible winning positions
     int [][] winning = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
 
 
@@ -50,13 +51,16 @@ public class MainActivity extends AppCompatActivity {
             if (status[position[0]] == status[position[1]]
                     && status[position[0]] == status[position[2]]
                     && status[position[0]] != 2){
+
                 String player;
+
                 if(status[position[0]] == 0)
                     player = "X";
                 else
                     player = "O";
 
-                Toast.makeText(this, "Player " + player + " " + " is the winner", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Player " + player + " is the winner, Congrats!", Toast.LENGTH_SHORT).show();
+
                 reset.setVisibility(View.VISIBLE);
             }
 
