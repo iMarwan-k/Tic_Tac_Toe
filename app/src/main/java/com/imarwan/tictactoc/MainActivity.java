@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     //2 means no player
     int [] status = {2,2,2,2,2,2,2,2,2};
 
+    int [][] winning = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+
 
     Button reset;
 
@@ -44,42 +46,20 @@ public class MainActivity extends AppCompatActivity {
             activePlayer = 0;
         }
 
-        outerfor: for(int i=0; i<status.length;i+=3){
-            int count =0;
-
-            for(int y=i+1; y<=i+2; y++)
-                if(status[i] == status[y] && status[i] != 2 && status[y] != 2)
-                    count++;
-
-            if (count == 2) {
+        for(int[] position : winning){
+            if (status[position[0]] == status[position[1]]
+                    && status[position[0]] == status[position[2]]
+                    && status[position[0]] != 2){
                 String player;
-                if(status[i] == 0)
+                if(status[position[0]] == 0)
                     player = "X";
                 else
                     player = "O";
 
-                Toast.makeText(this, "Player " + player + " " + " is the winner", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Player " + player + " " + " is the winner", Toast.LENGTH_SHORT).show();
                 reset.setVisibility(View.VISIBLE);
-                break outerfor;
             }
-            else
-                count = 0;
 
-            for (int z=i+3; z<status.length; z+=3)
-                if(status[i] == status[z] && status[i] != 2 && status[z] != 2)
-                    count++;
-
-            if (count == 2) {
-                String player;
-                if(status[i] == 0)
-                    player = "X";
-                else
-                    player = "O";
-
-                Toast.makeText(this, "Player " + player + " " + " is the winner", Toast.LENGTH_LONG).show();
-                reset.setVisibility(View.VISIBLE);
-                break outerfor;
-            }
         }
     }
 
@@ -87,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<9; i++){
             ImageView img = (ImageView) findViewById(R.id.mainScreen).findViewWithTag(String.valueOf(i));
             img.setImageResource(android.R.color.transparent);
+            status[i] = 2;
         }
         reset.setVisibility(View.INVISIBLE);
     }
