@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         int tap = Integer.parseInt(counter.getTag().toString());
 
-        if (status[tap] == 2 && playing == true){
+        if (status[tap] == 2 && playing){
             status[tap] = activePlayer;
 
             if(activePlayer == 0) {
