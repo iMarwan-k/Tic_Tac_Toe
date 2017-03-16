@@ -70,6 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
                     reset.setVisibility(View.VISIBLE);
                 }
+                else {
+                    boolean gameOver = true;
+                    for (int i=0; i<status.length;i++){
+                        if(status[i] == 2)
+                            gameOver = false;
+                    }
+
+                    if (gameOver) {
+                        Toast.makeText(this, "Ops!, Let play again", Toast.LENGTH_SHORT).show();
+                        reset.setVisibility(View.VISIBLE);
+                    }
+                }
 
             }
         }
@@ -78,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void restartGame(View view){
         for(int i=0; i<9; i++){
-            ImageView img = (ImageView) findViewById(R.id.mainScreen).findViewWithTag(String.valueOf(i));
+            ImageView img = (ImageView) findViewById(R.id.gridLayout).findViewWithTag(String.valueOf(i));
             img.setImageResource(android.R.color.transparent);
             status[i] = 2;
         }
