@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     //all possible winning positions
     int [][] winning = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
 
+    //to stop the game, use bool and set it to true at the beginning and play again and when someone win set to false
+    boolean playing = true;
 
     Button reset;
 
@@ -36,35 +38,42 @@ public class MainActivity extends AppCompatActivity {
         //we don't need to search for the image by using findbyid
         ImageView counter = (ImageView) view;
 
-        if(activePlayer == 0) {
-            counter.setImageResource(R.drawable.x);
-            status[Integer.parseInt(counter.getTag().toString())] = 0;
-            activePlayer = 1;
-        }
-        else {
-            counter.setImageResource(R.drawable.o);
-            status[Integer.parseInt(counter.getTag().toString())] = 1;
-            activePlayer = 0;
-        }
+        int tap = Integer.parseInt(counter.getTag().toString());
 
-        for(int[] position : winning){
-            if (status[position[0]] == status[position[1]]
-                    && status[position[0]] == status[position[2]]
-                    && status[position[0]] != 2){
+        if (status[tap] == 2 && playing == true){
+            status[tap] = activePlayer;
 
-                String player;
-
-                if(status[position[0]] == 0)
-                    player = "X";
-                else
-                    player = "O";
-
-                Toast.makeText(this, "Player " + player + " is the winner, Congrats!", Toast.LENGTH_SHORT).show();
-
-                reset.setVisibility(View.VISIBLE);
+            if(activePlayer == 0) {
+                counter.setImageResource(R.drawable.x);
+                activePlayer = 1;
+            }
+            else {
+                counter.setImageResource(R.drawable.o);
+                activePlayer = 0;
             }
 
+            for(int[] position : winning){
+                if (status[position[0]] == status[position[1]]
+                        && status[position[0]] == status[position[2]]
+                        && status[position[0]] != 2){
+
+                    String player;
+
+                    if(status[position[0]] == 0)
+                        player = "X";
+                    else
+                        player = "O";
+
+                    Toast.makeText(this, "Player " + player + " is the winner, Congrats!", Toast.LENGTH_LONG).show();
+
+                    playing = false;
+
+                    reset.setVisibility(View.VISIBLE);
+                }
+
+            }
         }
+
     }
 
     public void restartGame(View view){
@@ -74,5 +83,7 @@ public class MainActivity extends AppCompatActivity {
             status[i] = 2;
         }
         reset.setVisibility(View.INVISIBLE);
+        activePlayer = 0;
+        playing = true;
     }
 }
